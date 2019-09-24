@@ -6,7 +6,7 @@
 /*   By: bstacksp <bstacksp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 22:38:57 by bstacksp          #+#    #+#             */
-/*   Updated: 2019/09/23 23:51:18 by bstacksp         ###   ########.fr       */
+/*   Updated: 2019/09/23 23:56:05 by bstacksp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		new_line(char **s, char **line, int fd, int ret)
 
 int		get_next_line(const int fd, char **line)
 {
-	static char	*s[255];
+	static char	*s[fd];
 	char		buf[BUFF_SIZE + 1];
 	char		*tmp;
 	int			ret;
