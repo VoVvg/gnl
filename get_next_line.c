@@ -5,63 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bstacksp <bstacksp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/23 22:38:57 by bstacksp          #+#    #+#             */
-/*   Updated: 2019/09/23 23:56:05 by bstacksp         ###   ########.fr       */
+/*   Created: 2019/09/21 20:08:19 by bstacksp          #+#    #+#             */
+/*   Updated: 2019/09/26 20:05:36 by bstacksp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		new_line(char **s, char **line, int fd, int ret)
-{
-	char	*tmp;
-	int 	len;
-
-	len = 0;
-	while (s[fd][len] != '\n' && s[fd][len] != '\0')
-		len++;
-	if (s[fd][len] == '\n')
-	{
-		*line = ft_strsub(s[fd], 0, len);
-		tmp = ft_strdup(s[fd] + len + 1);
-		free(s[fd]);
-		s[fd] = tmp;
-		if (s[fd][0] == '\0')
-			ft_strdel(&s[fd]);
-	}
-	else if (s[fd][len] == '\0')
-	{
-		if (ret == BUFF_SIZE)
-			return (get_next_line(fd, line));
-		*line = ft_strdup(s[fd]);
-		ft_strdel(&s[fd]);
-	}
-	return (1);
-}
-
 int		get_next_line(const int fd, char **line)
 {
-	static char	*s[fd];
-	char		buf[BUFF_SIZE + 1];
-	char		*tmp;
-	int			ret;
+	static	char	*s[0];
+	char			buf[BUFF_SIZE + 1];
+	int				ret;
 
-	if (fd < 0 || line == NULL)
+	if (fd < 0 || line == NULL || read(fd, NULL, 0) < 0)
 		return (-1);
-	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
+	if (!s[fd])
+		s[fd] = ft_strnew(0);
+	while ((ret = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
-		if (s[fd] == NULL)
-			s[fd] = ft_strnew(1);
-		tmp = ft_strjoin(s[fd], buf);
-		free(s[fd]);	
-		s[fd] = tmp;
-		if (ft_strchr(buf, '\n'))
+		ft_swapnfree(&s[fd], ft_strjoin(s[fd], buf));
+		if (ft_strchr(s[fd], '\n'))
 			break ;
 	}
-	if (ret < 0)
-		return (-1);
-	else if (ret == 0 && (s[fd] == NULL || s[fd][0] == '\0'))
+	if (!*s[fd])
 		return (0);
-	return (new_line(s, line, fd, ret));
+	*line = ft_strsub(s[fd], 0, ft_strsnlen(s[fd]));
+	(ft_strlen(*line) < ft_strlen(s[fd]) ? ft_swapnfree(&s[fd],
+		ft_strdup(s[fd] + ft_strsnlen(s[fd]) + 1)) : ft_strdel(&s[fd]));
+	return (1);
 }

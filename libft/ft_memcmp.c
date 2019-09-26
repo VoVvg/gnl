@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bstacksp <bstacksp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/22 01:46:24 by bstacksp          #+#    #+#             */
-/*   Updated: 2019/09/26 20:27:14 by bstacksp         ###   ########.fr       */
+/*   Created: 2019/09/06 18:28:47 by bstacksp          #+#    #+#             */
+/*   Updated: 2019/09/18 16:27:11 by bstacksp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 22
-# include <unistd.h>
-# include <stdlib.h>
-# include "./libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
+#include "libft.h"
 
-int	get_next_line(const int fd, char **line);
+int		ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+	const unsigned char *ptr1;
+	const unsigned char *ptr2;
 
-#endif
+	ptr1 = (unsigned char *)s1;
+	ptr2 = (unsigned char *)s2;
+	while (n--)
+	{
+		if (*ptr1 != *ptr2)
+			return (*ptr1 - *ptr2);
+		else
+		{
+			ptr1++;
+			ptr2++;
+		}
+	}
+	return (0);
+}

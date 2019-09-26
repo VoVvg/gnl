@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bstacksp <bstacksp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/22 01:46:24 by bstacksp          #+#    #+#             */
-/*   Updated: 2019/09/26 20:27:14 by bstacksp         ###   ########.fr       */
+/*   Created: 2019/09/06 21:22:31 by bstacksp          #+#    #+#             */
+/*   Updated: 2019/09/18 16:27:11 by bstacksp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 22
-# include <unistd.h>
-# include <stdlib.h>
-# include "./libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
+#include "libft.h"
 
-int	get_next_line(const int fd, char **line);
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	char	*ptr;
+	char	*ptr2;
 
-#endif
+	ptr = dst;
+	ptr2 = (char *)src;
+	if (n == 0 || ((unsigned char *)dst == (unsigned char *)src))
+		return (dst);
+	while (n--)
+		*(ptr++) = *(ptr2++);
+	return (dst);
+}
