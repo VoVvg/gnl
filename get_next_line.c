@@ -6,7 +6,7 @@
 /*   By: bstacksp <bstacksp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 20:08:19 by bstacksp          #+#    #+#             */
-/*   Updated: 2019/09/27 16:03:01 by bstacksp         ###   ########.fr       */
+/*   Updated: 2019/09/27 16:54:19 by bstacksp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ int		get_next_line(const int fd, char **line)
 	}
 	if (!*s[fd])
 		return (0);
-	CHECKRETURN(!*(char *)(s[fd]) && ret < BUFF_SIZE, 0);
+	CHECKRETURN(!*(s[fd]) && ret < BUFF_SIZE, 0);
 	CHECKRETURN(!(*line = ft_strsub(s[fd], 0, ft_strsnlen(s[fd]))), -1);
 	(ft_strlen(*line) < ft_strlen(s[fd]) ? ft_swapnfree(&s[fd],
 		ft_strdup(s[fd] + ft_strsnlen(s[fd]) + 1)) : ft_strdel(&s[fd]));
+	free(s[fd]);
 	return (1);
 }
